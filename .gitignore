@@ -361,3 +361,10 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Library
+/Temp
+/ProjectSettings
+/UserSettings
+/.vsconfig
+/2026Gamejam.sln
+/Assembly-CSharp.csproj
