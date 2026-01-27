@@ -26,7 +26,7 @@ public class PlayerInfoManager : MonoBehaviour
 
     void Update()
     {
-        float sizex=GameDataManager.Instance.blood / 100f * maxsizex;
+        float sizex=GameDataManager.Instance.health / 100f * maxsizex;
         if(sizex != bloodbarquick.rectTransform.sizeDelta.x)
         {
             UpdateBloodBar();
@@ -35,8 +35,8 @@ public class PlayerInfoManager : MonoBehaviour
 
     void UpdateBloodBar()
     {
-        bloodbarquick.rectTransform.sizeDelta = new Vector2(GameDataManager.Instance.blood / 100f * maxsizex, bloodbarquick.rectTransform.sizeDelta.y);
-        bloodtext.text=$"{GameDataManager.Instance.blood}/100";
+        bloodbarquick.rectTransform.sizeDelta = new Vector2(GameDataManager.Instance.health / 100f * maxsizex, bloodbarquick.rectTransform.sizeDelta.y);
+        bloodtext.text=$"{GameDataManager.Instance.health}/100";
         StartCoroutine(Updatebloodbar());
     }
 
@@ -52,7 +52,7 @@ public class PlayerInfoManager : MonoBehaviour
             bloodbarslow.rectTransform.sizeDelta = new Vector2(sizex, bloodbarslow.rectTransform.sizeDelta.y);
             yield return null;
         }
-        bloodbarslow.rectTransform.sizeDelta = new Vector2(GameDataManager.Instance.blood / 100f * maxsizex, bloodbarslow.rectTransform.sizeDelta.y);
+        bloodbarslow.rectTransform.sizeDelta = new Vector2(GameDataManager.Instance.health / 100f * maxsizex, bloodbarslow.rectTransform.sizeDelta.y);
         yield break;
     }
 }

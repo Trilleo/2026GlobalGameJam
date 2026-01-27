@@ -21,16 +21,33 @@ public class GameDataManager : MonoBehaviour
             return instance;
         }
     }
+    public Transform player;
+    public float health;
+    public float damage;
+    public float moveSpeed;
+    public float jumpForce;
+    public float attackCooldown;
 
-    public float blood;
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
 
-    // Start is called before the first frame update
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         
