@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class Fireball : MonoBehaviour
+public class Iceball : MonoBehaviour
 {
     [Header("…À∫¶")]
     public float damage = 10f;
@@ -29,7 +29,8 @@ public class Fireball : MonoBehaviour
     void Hit(Collider2D enemy)
     {
         enemy.GetComponent<Monster>()?.TakeDamage(damage);
-        if(ifpenetrate == false)
+        enemy.GetComponent<Monster>()?.SetEffect("Slow", 3f);
+        if (ifpenetrate == false)
         Destroy(gameObject); 
     }
 }

@@ -5,15 +5,9 @@ using UnityEngine;
 public class SwordSkeleton : Monster
 {
 
-    void Start()
-    {
-        Reset();
-    }
+    void Start()=>Reset();
 
-    void Update()
-    {
-        LoadState();
-    }
+    void Update() => LoadState();
 
     public override void Attack(Collider2D other, int id)
     {
@@ -55,6 +49,7 @@ public class SwordSkeleton : Monster
 
         patrolTimer += Time.deltaTime;
         float moveDir = facingRight ? 1 : -1;
+        if (effects.Contains(effects.Find(e => e.effectname == "Slow"))) moveDir *= 0.5f;
         rb.velocity = new Vector2(moveDir * speed, rb.velocity.y);
         if (ShouldTurn(moveDir))
         {
@@ -87,14 +82,16 @@ public class SwordSkeleton : Monster
             return;
         }
         float dirX = player.position.x > transform.position.x ? 1 : -1;
+
         if (ShouldTurn(dirX))
         {
             rb.velocity = Vector2.zero;
             FaceTo(-dirX);
             return;
         }
-
-        rb.velocity = new Vector2(dirX * speed * 1.5f, rb.velocity.y);
+        float moveDir = player.position.x > transform.position.x ? 1 : -1;
+        if (effects.Contains(effects.Find(e => e.effectname == "Slow"))) moveDir *= 0.5f;
+        rb.velocity = new Vector2(moveDir * speed * 1.5f, rb.velocity.y);
         FaceTo(dirX);
     }
 
@@ -106,7 +103,9 @@ public class SwordSkeleton : Monster
         {
             attackTimer = 0;
             float dirX = player.position.x > transform.position.x ? 1 : -1;
-            rb.velocity = new Vector2(dirX * speed * 1.5f, rb.velocity.y);
+            float moveDir = player.position.x > transform.position.x ? 1 : -1;
+            if (effects.Contains(effects.Find(e => e.effectname == "Slow"))) moveDir *= 0.5f;
+            rb.velocity = new Vector2(moveDir * speed * 1.2f, rb.velocity.y);
             FaceTo(dirX);
             anim.SetTrigger("Attack");//播放攻击动画,打开触发器，如果触发执行上面的Attack函数
             currentState = (dist <= monsterdata.attackRange) ? State.Attack : State.Chase;
