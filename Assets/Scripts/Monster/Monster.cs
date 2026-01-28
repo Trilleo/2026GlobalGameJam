@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class Monster : MonoBehaviour
@@ -9,12 +10,26 @@ public abstract class Monster : MonoBehaviour
     public enum State { Idle, Patrol, Chase, Attack }
     public State currentState = State.Idle;
 
+    [System.Serializable]
+    public class Effect
+    {
+        public string effectname;
+        public float time;
+
+        public void DecreaseTime(float deltaTime)
+        {
+            time -= deltaTime;
+        }
+    }
+
     [Header("当前生命")]
     public float health = 100f;
     [Header("当前攻击")]
     public float damage = 10f;
     [Header("当前移动速度")]
     public float speed = 10f;
+    [Header("当前buff/debuff")]
+    public List<Effect> effects = new List<Effect>();
 
     [Header("检测是否受到伤害范围")]
     public List<Collider2D> monsterattackrange;
@@ -81,6 +96,38 @@ public abstract class Monster : MonoBehaviour
                 AttackState(distToPlayer);
                 break;
         }
+
+        if(effects.Contains(effects.Find(e => e.effectname == "Slow")))
+        {
+            GetComponent<SpriteRenderer>().color = Color.blue;
+        }
+        else
+        {
+            GetComponent<SpriteRenderer>().color = Color.white;
+        }
+
+        var toRemove = new List<Effect>();
+        foreach (var effect in effects)
+        {
+            switch (effect.effectname)
+            {
+
+            }
+            effect.DecreaseTime(Time.deltaTime);
+            if (effect.time <= 0)
+            {
+                toRemove.Add(effect);
+            }
+        }
+        for (int i = toRemove.Count - 1; i >= 0; i--)
+        {
+            switch (toRemove[i].effectname)
+            {
+
+            }
+
+            effects.Remove(toRemove[i]);
+        }
     }
 
     public abstract void Attack(Collider2D other,int id);//这个抽象方法是触发器触发后调用的
@@ -96,6 +143,17 @@ public abstract class Monster : MonoBehaviour
         {
             Die();
         }
+    }
+
+    public void SetEffect(string name,float time)
+    {
+        if(effects.Exists(e => e.effectname == name))
+        {
+            var existingEffect = effects.Find(e => e.effectname == name);
+            existingEffect.time = time;
+            return;
+        }
+        effects.Add(new Effect { effectname = name, time = time });
     }
 
     public abstract void Die();
