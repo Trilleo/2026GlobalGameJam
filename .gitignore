@@ -74,7 +74,6 @@ StyleCopReport.xml
 *_p.c
 *_h.h
 *.ilk
-*.meta
 *.obj
 *.iobj
 *.pch
@@ -363,7 +362,6 @@ MigrationBackup/
 FodyWeavers.xsd
 /Library
 /Temp
-/ProjectSettings
 /UserSettings
 /.vsconfig
 /2026Gamejam.sln

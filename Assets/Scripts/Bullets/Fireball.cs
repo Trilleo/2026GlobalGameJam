@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class Fireball : MonoBehaviour
@@ -5,7 +6,6 @@ public class Fireball : MonoBehaviour
     [Header("ÃüÖÐ²ÎÊý")]
     public float damage = 10f;
     public float lifeTime = 3f;
-
     Rigidbody2D rb;
 
     void Awake() => rb = GetComponent<Rigidbody2D>();
