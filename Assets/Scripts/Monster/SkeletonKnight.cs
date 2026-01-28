@@ -1,13 +1,24 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class SkeletonKnight : Monster
 {
-    private bool isEnraged = false; // 是否狂暴状态（血量低于50%）
-    private float enrageMultiplier = 1.5f; // 狂暴时速度加成
+    private bool isEnraged = false;
+    private float enrageMultiplier = 1.5f;
 
     void Start()
     {
+        // 先确保找到玩家
+        if (player == null)
+        {
+            player = GameObject.FindWithTag("Player")?.transform;
+            if (player == null)
+            {
+                Debug.LogError("找不到Player！");
+                return;
+            }
+        }
+
         Reset();
     }
 
@@ -15,7 +26,6 @@ public class SkeletonKnight : Monster
     {
         LoadState();
 
-        // 检查是否需要进入狂暴状态
         if (!isEnraged && health <= monsterdata.health * 0.5f)
         {
             Enrage();
@@ -33,16 +43,13 @@ public class SkeletonKnight : Monster
     public override void Die()
     {
         _isDead = true;
-        // 可以添加死亡动画、特效等
-        Destroy(gameObject, 0.5f); // 延迟销毁以播放动画
+        Destroy(gameObject);
     }
 
-    // 进入狂暴状态（血量低于50%时触发）
     void Enrage()
     {
         isEnraged = true;
-        speed *= enrageMultiplier; // 速度变快
-        anim.SetTrigger("Enrage"); // 如果有动画的话
+        speed *= enrageMultiplier;
         Debug.Log("骷髅骑士进入狂暴状态！速度提升！");
     }
 
@@ -79,7 +86,7 @@ public class SkeletonKnight : Monster
         patrolTimer += Time.deltaTime;
         float moveDir = facingRight ? 1 : -1;
 
-        // 如果狂暴状态，巡逻速度也加快
+        // 修复：必须设置速度！
         float currentSpeed = isEnraged ? speed * 1.2f : speed;
         rb.velocity = new Vector2(moveDir * currentSpeed, rb.velocity.y);
 
@@ -126,7 +133,7 @@ public class SkeletonKnight : Monster
             return;
         }
 
-        // 狂暴状态追逐更快
+        // 修复：必须设置速度！
         float chaseSpeed = isEnraged ? speed * 1.8f : speed * 1.5f;
         rb.velocity = new Vector2(dirX * chaseSpeed, rb.velocity.y);
         FaceTo(dirX);
@@ -140,23 +147,19 @@ public class SkeletonKnight : Monster
         {
             attackTimer = 0;
 
-            // 面对玩家方向
             float dirX = player.position.x > transform.position.x ? 1 : -1;
             FaceTo(dirX);
 
-            // 播放攻击动画
             anim.SetTrigger("Attack");
 
-            // 根据距离决定下一步状态
+            // 攻击后的移动逻辑
             if (dist <= monsterdata.attackRange)
             {
-                // 在原地继续攻击
                 rb.velocity = Vector2.zero;
                 currentState = State.Attack;
             }
             else
             {
-                // 追逐玩家
                 float chaseSpeed = isEnraged ? speed * 1.8f : speed * 1.5f;
                 rb.velocity = new Vector2(dirX * chaseSpeed, rb.velocity.y);
                 currentState = State.Chase;
@@ -164,7 +167,6 @@ public class SkeletonKnight : Monster
         }
         else
         {
-            // 攻击过程中面向玩家但不移动
             float dirX = player.position.x > transform.position.x ? 1 : -1;
             FaceTo(dirX);
         }

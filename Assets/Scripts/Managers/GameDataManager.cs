@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GameDataManager : MonoBehaviour
 {
-
     private static GameDataManager instance;
     public static GameDataManager Instance
     {
@@ -21,11 +20,28 @@ public class GameDataManager : MonoBehaviour
             return instance;
         }
     }
+    public enum Type
+    {
+        iron,
+        fire,
+        wind,
+        ice,
+        thunder,
+        death
+    }
+    [Header("玩家")]
     public Transform player;
+    [Header("玩家当前面具")]
+    public Type playerType;
+    [Header("玩家生命值")]
     public float health;
+    [Header("玩家攻击力")]
     public float damage;
+    [Header("玩家移速")]
     public float moveSpeed;
+    [Header("玩家跳跃高度")]
     public float jumpForce;
+    [Header("玩家攻击间隔")]
     public float attackCooldown;
 
     private void Awake()

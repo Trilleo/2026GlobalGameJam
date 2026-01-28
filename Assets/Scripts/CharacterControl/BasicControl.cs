@@ -11,17 +11,11 @@ public class BasicControl : MonoBehaviour
     public LayerMask enemyLayer;
 
     private Rigidbody2D _rb;
-    private SpriteRenderer _sr;
     private bool _isDead = false;
-
-    public GameObject fireballPrefab;   // 拖火球预制体
-    public float launchSpeed = 20f;
 
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        if (transform.childCount > 0)
-            _sr = transform.GetChild(0).GetComponent<SpriteRenderer>();
 
     }
 
@@ -39,23 +33,10 @@ public class BasicControl : MonoBehaviour
 
         float h = Input.GetAxis("Horizontal");
 
-        if (h != 0 && _sr != null)
+        if (h != 0)
         {
-            _sr.flipX = h > 0;
+            transform.localScale = new Vector3(Mathf.Sign(h) * Math.Abs(transform.localScale.x), transform.localScale.y, 1);
         }
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            Launch();
-        }
-    }
-
-    void Launch()
-    {
-        // 从枪口/手发射
-        GameObject fb = Instantiate(fireballPrefab, transform.position, transform.rotation);
-        Rigidbody2D rb = fb.GetComponent<Rigidbody2D>();
-        rb.velocity = transform.right * launchSpeed;   // 2D：right 发射
-        // 3D：rb.velocity = transform.forward * launchSpeed;
     }
 
     void HandleMovement()
