@@ -6,7 +6,7 @@ public abstract class Monster : MonoBehaviour
 {
     public CreateMonster monsterdata;
 
-    // ×´Ì¬Ã¶¾Ù
+    // ×´Ì¬Ã¶ï¿½ï¿½
     public enum State { Idle, Patrol, Chase, Attack }
     public State currentState = State.Idle;
 
@@ -22,21 +22,21 @@ public abstract class Monster : MonoBehaviour
         }
     }
 
-    [Header("µ±Ç°ÉúÃü")]
+    [Header("ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½")]
     public float health = 100f;
-    [Header("µ±Ç°¹¥»÷")]
+    [Header("ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½")]
     public float damage = 10f;
-    [Header("µ±Ç°ÒÆ¶¯ËÙ¶È")]
+    [Header("ï¿½ï¿½Ç°ï¿½Æ¶ï¿½ï¿½Ù¶ï¿½")]
     public float speed = 10f;
-    [Header("µ±Ç°buff/debuff")]
+    [Header("ï¿½ï¿½Ç°buff/debuff")]
     public List<Effect> effects = new List<Effect>();
 
-    [Header("¼ì²âÊÇ·ñÊÜµ½ÉËº¦·¶Î§")]
+    [Header("ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Üµï¿½ï¿½Ëºï¿½ï¿½ï¿½Î§")]
     public List<Collider2D> monsterattackrange;
-    [Header("µØÐÎ¼ì²â")]
-    public float frontRayDist = 0.8f;   // Ç°·½Ç½¼ì²â¾àÀë
-    public float groundRayDist = 1f;   // ½ÅÏÂÐüÑÂ¼ì²â¾àÀë
-    public LayerMask groundLayer;        // µØÃæ²ã£¨º¬Ç½±Ú£©
+    [Header("ï¿½ï¿½ï¿½Î¼ï¿½ï¿½")]
+    public float frontRayDist = 0.8f;   // Ç°ï¿½ï¿½Ç½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public float groundRayDist = 1f;   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½
+    public LayerMask groundLayer;        // ï¿½ï¿½ï¿½ï¿½ã£¨ï¿½ï¿½Ç½ï¿½Ú£ï¿½
 
     protected Transform player;
     protected float patrolTimer;     
@@ -50,7 +50,7 @@ public abstract class Monster : MonoBehaviour
     protected Vector3 startPos;
     protected bool _isDead = false;
 
-    public void Reset()//³õÊ¼»¯¹ÖÎïÊý¾Ý
+    public void Reset()//ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     {
         player=GameDataManager.Instance.player;
         foreach (Collider2D collider in monsterattackrange)
@@ -74,7 +74,7 @@ public abstract class Monster : MonoBehaviour
                                             transform.localScale.z);
     }
 
-    public void LoadState()//ËæÊ±¶ÁÈ¡×´Ì¬
+    public void LoadState()//ï¿½ï¿½Ê±ï¿½ï¿½È¡×´Ì¬
     {
         if (player == null) return;
 
@@ -130,7 +130,7 @@ public abstract class Monster : MonoBehaviour
         }
     }
 
-    public abstract void Attack(Collider2D other,int id);//Õâ¸ö³éÏó·½·¨ÊÇ´¥·¢Æ÷´¥·¢ºóµ÷ÓÃµÄ
+    public abstract void Attack(Collider2D other,int id);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó·½·ï¿½ï¿½Ç´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½
 
     public void TakeDamage(float amount)
     {
@@ -157,27 +157,27 @@ public abstract class Monster : MonoBehaviour
 
     public abstract void Die();
 
-    #region ×´Ì¬»ú¹¦ÄÜÊµÏÖ³éÏó·½·¨
-    protected abstract void IdleState(float dist);//´ý»ú·½·¨
+    #region ×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½Ö³ï¿½ï¿½ó·½·ï¿½
+    protected abstract void IdleState(float dist);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-    protected abstract void PatrolState(float dist);//Ñ²Âß·½·¨
+    protected abstract void PatrolState(float dist);//Ñ²ï¿½ß·ï¿½ï¿½ï¿½
 
-    protected abstract void ChaseState(float dist);//Ë÷µÐ·½·¨
+    protected abstract void ChaseState(float dist);//ï¿½ï¿½ï¿½Ð·ï¿½ï¿½ï¿½
 
-    protected abstract void AttackState(float dist);//¹¥»÷·½·¨
+    protected abstract void AttackState(float dist);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     protected bool ShouldTurn(float moveDir)
     {
-        // 1. Ç°·½Ç½¼ì²â£¨Ë®Æ½ÉäÏß£©
+        // 1. Ç°ï¿½ï¿½Ç½ï¿½ï¿½â£¨Ë®Æ½ï¿½ï¿½ï¿½ß£ï¿½
         Vector2 origin = transform.position;
         Vector2 direction = new Vector2(moveDir, 0);
         RaycastHit2D hitWall = Physics2D.Raycast(origin, direction, frontRayDist, groundLayer);
 
-        // 2. ½ÅÏÂÐüÑÂ¼ì²â£¨Ð±ÏòÏÂÉäÏß£©
+        // 2. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½â£¨Ð±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß£ï¿½
         Vector2 groundOrigin = transform.position + Vector3.down * 0.1f + Vector3.right * (facingRight ? 0.5f : -0.5f);
         RaycastHit2D hitGround = Physics2D.Raycast(groundOrigin, Vector2.down, groundRayDist, groundLayer);
 
-        // ÓÐÇ½ »ò ½ÅÏÂÎÞµØÃæ ¡ú Ó¦¸ÃµôÍ·
+        // ï¿½ï¿½Ç½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Þµï¿½ï¿½ï¿½ ï¿½ï¿½ Ó¦ï¿½Ãµï¿½Í·
         return hitWall.collider != null || hitGround.collider == null;
     }
 
@@ -213,21 +213,21 @@ public abstract class Monster : MonoBehaviour
     }
     #endregion
 
-    void OnDrawGizmosSelected()
+    protected virtual void OnDrawGizmosSelected()
     {
-        // ¿ÉÊÓ»¯·¶Î§
+        // ï¿½ï¿½ï¿½Ó»ï¿½ï¿½ï¿½Î§
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, monsterdata.detectRange);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, monsterdata.attackRange);
 
-        // Ç°·½Ç½¼ì²â
+        // Ç°ï¿½ï¿½Ç½ï¿½ï¿½ï¿½
         Gizmos.color = Color.blue;
         Vector2 origin = transform.position;
         Vector2 dir = new Vector2(facingRight ? 1 : -1, 0);
         Gizmos.DrawRay(origin, dir * frontRayDist);
 
-        // ½ÅÏÂÐüÑÂ¼ì²â
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½
         Gizmos.color = Color.cyan;
         Vector2 groundOrigin = transform.position + Vector3.down * 0.1f + Vector3.right * (facingRight ? 0.5f : -0.5f);
         Gizmos.DrawRay(groundOrigin, Vector2.down * groundRayDist);
