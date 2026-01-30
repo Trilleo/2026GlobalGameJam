@@ -9,10 +9,10 @@ public class BasicControl : MonoBehaviour
     public Transform attackPoint;
     public float attackRange = 0.5f;
     public LayerMask enemyLayer;
-    public float attackslow = 0.5f;//攻击移速衰减
-    public float jumpattackslow = 0.7f;//跳跃攻击移速衰减
+    public float attackslow = 0.5f;//��������˥��
+    public float jumpattackslow = 0.7f;//��Ծ��������˥��
     public bool attacking = false;
-    public SpriteRenderer render;//残影形象
+    public SpriteRenderer render;//��Ӱ����
 
     private Rigidbody2D _rb;
     private bool _isDead = false;
@@ -21,7 +21,7 @@ public class BasicControl : MonoBehaviour
 
     private SpriteRenderer[] renderers;
     private List<GameObject> ghosts = new List<GameObject>();
-    private bool isTrailing = false;   // 开关
+    private bool isTrailing = false;   // ����
     private float spawnInterval;
     private float fadeSpeed;
     private Color ghostColor;
@@ -100,7 +100,6 @@ public class BasicControl : MonoBehaviour
                     h = Input.GetAxis("Horizontal");
                 }
             }
-            // 使用当前实际移动速度
             _rb.velocity = new Vector2(h * GameDataManager.Instance.moveSpeed, _rb.velocity.y);
             _animator.SetBool("Move", true);
         }
@@ -145,7 +144,7 @@ public class BasicControl : MonoBehaviour
     {
         startwindattack = false;
     }
-    /* 外部调用：开始留残影 */
+    /* �ⲿ���ã���ʼ���Ӱ */
     public void StartTrail()
     {
         if (isTrailing) return;
@@ -153,7 +152,7 @@ public class BasicControl : MonoBehaviour
         InvokeRepeating(nameof(SpawnGhost), 0, spawnInterval);
     }
 
-    /* 外部调用：停止留残影 */
+    /* �ⲿ���ã�ֹͣ���Ӱ */
     public void StopTrail()
     {
         if (!isTrailing) return;
