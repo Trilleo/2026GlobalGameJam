@@ -20,7 +20,7 @@ public class CreateMonster : ScriptableObject
     [Header("攻击")]
     public float damage = 10f;
     [Header("移动速度")]
-    public float speed = 10f;
+    public Vector2 speed = new Vector2(8, 15);
     [Header("静止时长")]
     public float idleTime = 2f;
     [Header("索敌范围")]
@@ -31,4 +31,8 @@ public class CreateMonster : ScriptableObject
     public float attackCooldown = 2f;
     [Header("单次巡逻最长时长")]
     public float patrolDuration = 2f;
+    [Header("是否可以被击飞")]
+    public bool canBeKnocked = true;
+    [Header("是否可以被硬直")]
+    public bool canbeHitStun = true;   
 }

@@ -16,9 +16,11 @@ MonoBehaviour:
   type: 0
   health: 100
   damage: 10
-  speed: 10
-  idleTime: 2
-  detectRange: 10
+  speed: {x: 2.5, y: 4.5}
+  idleTime: 1.5
+  detectRange: 5
   attackRange: 1.5
-  attackCooldown: 2
+  attackCooldown: 0.8
   patrolDuration: 2
+  canBeKnocked: 1
+  canbeHitStun: 1

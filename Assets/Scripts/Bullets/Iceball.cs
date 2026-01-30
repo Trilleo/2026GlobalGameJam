@@ -7,8 +7,10 @@ public class Iceball : MonoBehaviour
     public float damage = 10f;
     [Header("存在时间")]
     public float lifeTime = 3f;
-    [Header("是否可穿透")]
+    [Header("是否可穿透敌人")]
     public bool ifpenetrate = false;
+    [Header("是否可穿透墙体")]
+    public bool ifpenetratewall = false;
     Rigidbody2D rb;
 
     void Awake() => rb = GetComponent<Rigidbody2D>();
@@ -20,7 +22,7 @@ public class Iceball : MonoBehaviour
         if (other.CompareTag("Enemy"))
             Hit(other);
 
-        if (other.CompareTag("Ground")&&!ifpenetrate)
+        if (other.CompareTag("Ground")&&!ifpenetratewall)
         {
             Destroy(gameObject);
         }

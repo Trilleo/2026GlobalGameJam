@@ -27,6 +27,11 @@ public class JumpController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+    private void Start()
+    {
+        jumpHeight = GameDataManager.Instance.jumpForce;
+    }
+
     void Update()
     {
         // ¬‰µÿºÏ≤‚
@@ -34,7 +39,10 @@ public class JumpController : MonoBehaviour
         
         // ¬‰µÿ∏¥Œª
         if (isGrounded)
+        {
             jumpCount = 0;
+            GetComponent<Animator>().SetBool("Jump", false);
+        }
 
         // Ã¯‘æ ‰»Î
         if (Input.GetKeyDown(jumpKey))
@@ -46,6 +54,7 @@ public class JumpController : MonoBehaviour
 
     void Jump()
     {
+        GetComponent<Animator>().SetBool("Jump", true);
         jumpCount++;
 
         float jumpSpeed = Mathf.Sqrt(2f * Mathf.Abs(Physics2D.gravity.y) * jumpHeight);

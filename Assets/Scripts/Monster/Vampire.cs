@@ -190,7 +190,7 @@ public class Vampire : Monster
         {
             attackTimer = 0;
             FaceTo(player.position.x - transform.position.x);
-            anim.SetTrigger("Attack");
+            //anim.SetTrigger("Attack");
             
             if (dist > monsterdata.attackRange) currentState = State.Chase;
         }
