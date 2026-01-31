@@ -46,7 +46,7 @@ public class FireMask : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L)&&cooldownTimer==0)
         {
             cooldownTimer = skillCooldown;
-            PlayerInfoManager.Instance.SkillCoolDown(skillCooldown);
+            PlayerInfoManager.Instance?.SkillCoolDown(skillCooldown);
             SpawnOrbs();
         }
 
