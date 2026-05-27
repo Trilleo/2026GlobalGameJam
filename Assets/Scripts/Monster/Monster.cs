@@ -77,6 +77,8 @@ public abstract class Monster : MonoBehaviour
 
     protected float hitStunTimer = 0f;  // 剩余硬直
     protected float freezeTimer = 0f;
+    protected bool _isInvulnerable = false;
+    protected bool useFullDistance = false;
 
     private Image bloodback;
     private Image bloodquick;
@@ -208,13 +210,21 @@ public abstract class Monster : MonoBehaviour
             return;  
         }
 
-        float distToPlayer = Vector2.Distance(
-                        new Vector2(transform.position.x, 0),
-                        new Vector2(player.position.x, 0));
+        float distToPlayer;
+        if (useFullDistance)
+        {
+            distToPlayer = Vector2.Distance(transform.position, player.position);
+        }
+        else
+        {
+            distToPlayer = Vector2.Distance(
+                            new Vector2(transform.position.x, 0),
+                            new Vector2(player.position.x, 0));
 
-        float yDelta = Mathf.Abs(transform.position.y - player.position.y);
-        if (yDelta > monsterdata.heightDetectRange)          // 新增字段
-            distToPlayer = float.MaxValue;
+            float yDelta = Mathf.Abs(transform.position.y - player.position.y);
+            if (yDelta > monsterdata.heightDetectRange)          // 新增字段
+                distToPlayer = float.MaxValue;
+        }
 
         switch (currentState)
         {
@@ -238,6 +248,7 @@ public abstract class Monster : MonoBehaviour
     public void TakeDamage(float amount, float? hitstuntime = 0.15f, Vector2? knockBackDir = null)
     {
         if (_isDead) return;
+        if (_isInvulnerable) return;
 
         blood.SetActive(true);
         openblood = true;

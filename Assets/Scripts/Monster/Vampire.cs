@@ -28,7 +28,6 @@ public class Vampire : Monster
     public float mistFormDuration = 2f;
     public float mistFormRepositionHeight = 3f;
     private bool _mistFormTriggered = false;
-    private bool _isInvulnerable = false;
 
     private SpriteRenderer _sr;
     private bool _isReturning = false;
@@ -37,6 +36,7 @@ public class Vampire : Monster
     {
         _sr = GetComponent<SpriteRenderer>();
         Reset();
+        useFullDistance = true;
         
         _flightMin = (Vector2)startPos - flightAreaSize / 2f;
         _flightMax = (Vector2)startPos + flightAreaSize / 2f;
@@ -54,12 +54,6 @@ public class Vampire : Monster
         {
             StartCoroutine(MistFormRoutine());
         }
-    }
-    
-    public new void TakeDamage(float amount)
-    {
-        if (_isInvulnerable) return;
-        base.TakeDamage(amount);
     }
 
     public override void Attack(Collider2D other, int id)
